@@ -1,19 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import Hero from './hero';
+import {HeroService} from './hero.service';
 import {HeroDetailComponent} from './hero-detail.component';
-
-const HEROES: Hero[] = [
-  { id: 11, name: 'Mr. Nice' },
-  { id: 12, name: 'Narco' },
-  { id: 13, name: 'Bombasto' },
-  { id: 14, name: 'Celeritas' },
-  { id: 15, name: 'Magneta' },
-  { id: 16, name: 'RubberMan' },
-  { id: 17, name: 'Dynama' },
-  { id: 18, name: 'Dr IQ' },
-  { id: 19, name: 'Magma' },
-  { id: 20, name: 'Tornado' }
-];
 
 @Component({
 	selector:'my-app',
@@ -27,6 +15,7 @@ const HEROES: Hero[] = [
         <span class="badge">{{hero.id}}</span> {{hero.name}}
       </li>
     </ul>
+    <h2 *ngIf="isLoading">Loading...</h2>
   <my-hero-detail [hero]="selectedHero"></my-hero-detail>
   `,
   styles: [`
@@ -78,15 +67,31 @@ const HEROES: Hero[] = [
     border-radius: 4px 0 0 4px;
   }
 `],
-    directives: [HeroDetailComponent]
+    directives: [HeroDetailComponent],
+    providers: [HeroService]
 })
-export class AppComponent{
-	title = 'Tour of Heroes';
-  selectedHero:Hero;
-  heroes = HEROES;
-  onSelect(hero:Hero){
-  	this.selectedHero = hero;
-  }
+export class AppComponent implements OnInit{
+    title = 'Tour of Heroes';
+    selectedHero:Hero;
+    heroes:Hero[];
+    isLoading:boolean = true;
+    constructor(private heroService:HeroService){
+        
+    }
+    ngOnInit(){
+        this.getHeroes();
+    }
+
+    getHeroes(){
+        this.heroService.getHeroes()
+            .then(heroes => {
+                this.heroes = heroes;
+                this.isLoading = false;
+            });
+    }
+    onSelect(hero:Hero){
+        this.selectedHero = hero;
+    }
 }
 
 
