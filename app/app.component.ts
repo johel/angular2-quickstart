@@ -8,8 +8,8 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 	selector:'my-app',
 	template: `
   <h1>{{title}}</h1>
-  <a [routerLink]="['/']">Dashboard</a>
-  <a [routerLink]="['/heroes']">Heroes</a>
+  <a [routerLink]="['/']" routerLinkActive="active">Dashboard</a>
+  <a [routerLink]="['/heroes']" routerLinkActive="active">Heroes</a>
   <router-outlet></router-outlet>
 `,
 	directives:[ROUTER_DIRECTIVES, HeroesComponent],
