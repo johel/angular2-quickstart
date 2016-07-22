@@ -6,12 +6,8 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
 	selector:'my-app',
-	template: `
-  <h1>{{title}}</h1>
-  <a [routerLink]="['/']" routerLinkActive="active">Dashboard</a>
-  <a [routerLink]="['/heroes']" routerLinkActive="active">Heroes</a>
-  <router-outlet></router-outlet>
-`,
+	templateUrl:'app/app.component.html',
+	styleUrls: ['app/app.component.css'],
 	directives:[ROUTER_DIRECTIVES, HeroesComponent],
 	providers:[HeroService]
 })
