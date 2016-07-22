@@ -16,7 +16,6 @@ import {HEROES} from './mock-heroes';
       </li>
     </ul>
     <h2 *ngIf="isLoading">Loading...</h2>
-  <my-hero-detail [hero]="selectedHero"></my-hero-detail>
   `,
   styles: [`
   .selected {

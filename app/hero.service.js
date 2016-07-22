@@ -15,7 +15,18 @@ var HeroService = (function () {
     }
     HeroService.prototype.getHeroes = function () {
         return new Promise(function (resolve, reject) {
-            setTimeout(function () { return resolve(mock_heroes_1.HEROES); }, 2000);
+            setTimeout(function () { return resolve(mock_heroes_1.HEROES); }, 1000);
+        });
+    };
+    HeroService.prototype.getHeroById = function (id) {
+        var hero = mock_heroes_1.HEROES.find(function (hero) { return hero.id === id; });
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                if (!hero) {
+                    reject('nenhum herói com esse id');
+                }
+                resolve(hero);
+            }, 1000);
         });
     };
     HeroService = __decorate([
