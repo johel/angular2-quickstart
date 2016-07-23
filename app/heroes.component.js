@@ -13,25 +13,48 @@ var router_1 = require('@angular/router');
 var hero_service_1 = require('./hero.service');
 var hero_detail_component_1 = require('./hero-detail.component');
 var HeroesComponent = (function () {
-    function HeroesComponent(heroService, router) {
-        this.heroService = heroService;
+    function HeroesComponent(router, heroService) {
         this.router = router;
-        this.title = 'Tour of Heroes';
-        this.isLoading = true;
+        this.heroService = heroService;
+        this.addingHero = false;
     }
+    HeroesComponent.prototype.getHeroes = function () {
+        var _this = this;
+        this.heroService
+            .getHeroes()
+            .then(function (heroes) { return _this.heroes = heroes; })
+            .catch(function (error) { return _this.error = error; });
+    };
+    HeroesComponent.prototype.addHero = function () {
+        console.log('adding hero');
+        this.addingHero = true;
+        this.selectedHero = null;
+    };
+    HeroesComponent.prototype.close = function (savedHero) {
+        this.addingHero = false;
+        if (savedHero) {
+            this.getHeroes();
+        }
+    };
+    HeroesComponent.prototype.deleteHero = function (hero, event) {
+        var _this = this;
+        event.stopPropagation();
+        this.heroService
+            .delete(hero)
+            .then(function (res) {
+            _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
+            if (_this.selectedHero === hero) {
+                _this.selectedHero = null;
+            }
+        })
+            .catch(function (error) { return _this.error = error; });
+    };
     HeroesComponent.prototype.ngOnInit = function () {
         this.getHeroes();
     };
-    HeroesComponent.prototype.getHeroes = function () {
-        var _this = this;
-        this.heroService.getHeroes()
-            .then(function (heroes) {
-            _this.heroes = [].concat(heroes);
-            _this.isLoading = false;
-        });
-    };
     HeroesComponent.prototype.onSelect = function (hero) {
         this.selectedHero = hero;
+        this.addingHero = false;
     };
     HeroesComponent.prototype.gotoDetail = function () {
         this.router.navigate(['/heroes', this.selectedHero.id]);
@@ -43,7 +66,7 @@ var HeroesComponent = (function () {
             styleUrls: ['app/heroes.component.css'],
             directives: [hero_detail_component_1.HeroDetailComponent]
         }), 
-        __metadata('design:paramtypes', [hero_service_1.HeroService, router_1.Router])
+        __metadata('design:paramtypes', [router_1.Router, hero_service_1.HeroService])
     ], HeroesComponent);
     return HeroesComponent;
 }());

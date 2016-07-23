@@ -9,9 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var heroes_component_1 = require('./heroes.component');
-var hero_service_1 = require('./hero.service');
 var router_1 = require('@angular/router');
+var hero_service_1 = require('./hero.service');
+require('./rxjs-extensions');
 var AppComponent = (function () {
     function AppComponent() {
         this.title = 'Tour of Heroes';
@@ -19,10 +19,12 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            templateUrl: 'app/app.component.html',
+            template: "\n    <h1>{{title}}</h1>\n    <nav>\n      <a [routerLink]=\"['/dashboard']\" routerLinkActive=\"active\">Dashboard</a>\n      <a [routerLink]=\"['/heroes']\" routerLinkActive=\"active\">Heroes</a>\n    </nav>\n    <router-outlet></router-outlet>\n  ",
             styleUrls: ['app/app.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, heroes_component_1.HeroesComponent],
-            providers: [hero_service_1.HeroService]
+            directives: [router_1.ROUTER_DIRECTIVES],
+            providers: [
+                hero_service_1.HeroService,
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
