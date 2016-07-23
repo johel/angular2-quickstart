@@ -1,19 +1,13 @@
 import { Component }          from '@angular/core';
 import { ROUTER_DIRECTIVES }  from '@angular/router';
 import { HeroService }        from './hero.service';
+import  {HeroSearchComponent} from './hero-search.component';
 import './rxjs-extensions';
 @Component({
   selector: 'my-app',
-  template: `
-    <h1>{{title}}</h1>
-    <nav>
-      <a [routerLink]="['/dashboard']" routerLinkActive="active">Dashboard</a>
-      <a [routerLink]="['/heroes']" routerLinkActive="active">Heroes</a>
-    </nav>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: 'app/app.component.html',
   styleUrls: ['app/app.component.css'],
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, HeroSearchComponent],
   providers: [
     HeroService,
   ]
